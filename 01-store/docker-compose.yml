@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+#  postgres:
+#    build:
+#      context: services/postgres
+#      dockerfile: Dockerfile.development
+#    command: postgres
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - "~/.bash_history:/.bash_history"
+#      - "/tmp:/tmp:delegated"
+  store-service:
+    build:
+      context: .
+      dockerfile: ./docker/store/Dockerfile
+    ports:
+      - 18181:18181
+#    depends_on:
+#      - postgres
