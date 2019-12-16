@@ -1,12 +1,38 @@
 ## Проект магазин (книжный)
 
 #### Table of Contents  
-[Headers](#headers)  
-[Emphasis](#emphasis)  
-...snip...
-<a name="headers"/>
+[Диаграмма](#диаграмма)  
+[Rest API](#rest-api)  
 
-* [Part I: Maven](./docs/programme/maven.md)
+
+
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+выафаыа  
+
+## Диаграмма
 
 ![Alt text](pictures/diagram1.png?raw=true "Title")
 
@@ -42,7 +68,7 @@
 выафаыа  
 выафаыа  
 
-## Headers
+## Rest API
 
 dfadf  
 fdasfads  
