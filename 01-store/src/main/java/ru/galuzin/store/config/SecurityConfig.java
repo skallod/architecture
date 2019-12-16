@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.session.web.http.HttpSessionStrategy;
+import ru.galuzin.store.service.UserSecurityService;
+
 import java.security.SecureRandom;
 
 @EnableWebSecurity
@@ -22,8 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment env;
 
-//    @Autowired
-//    private UserSecurityService userSecurityService;
+    @Autowired
+    private UserSecurityService userSecurityService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,21 +42,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/api/v1/checkAdmin").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST,"/api/v1/book/*").permitAll()//.hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/v1/book/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/api/v1/book/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/v1/order/create").hasRole("ADMIN")
                 .anyRequest().authenticated()
-        //.and().logout().logoutUrl("/user/logout").invalidateHttpSession(true).clearAuthentication(true)//не заработало
         ;
     }
 
-//    @Autowired
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userSecurityService)/*.passwordEncoder(passwordEncoder())*/;
-//    }
-//
-//    @Bean
-//    public HttpSessionStrategy httpSessionStrategy() {
-//        return new HeaderHttpSessionStrategy();
-//    }
+    @Autowired
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userSecurityService)/*.passwordEncoder(passwordEncoder())*/;
+    }
+
+    @Bean
+    public HttpSessionStrategy httpSessionStrategy() {
+        return new HeaderHttpSessionStrategy();
+    }
 
 }

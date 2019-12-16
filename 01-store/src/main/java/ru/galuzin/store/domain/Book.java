@@ -14,35 +14,46 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_id_seq")
     @SequenceGenerator(name = "book_id_seq", sequenceName = "book_id_seq")
-    private Long id;
+    private long id;
+
     @NotBlank
     @Size(max = 255)
     private String title;
+
     @NotBlank
     @Size(max = 255)
     private String author;
+
     private String publisher;
+
     private String publicationDate;
+
     private String language;
+
     private String category;
+
     private int numberOfPages;
+
     private String format;
+
     private String isbn;
-    private double shippingWeight;
-    private double price;
+    /**
+     * Вес в граммах
+     */
+    private long shippingWeight;
+    /**
+     * Цена в копейках
+     */
+    private long price;
+
     private boolean active = true;
+
     @Column(columnDefinition="text")
     private String description;
+
     private int inStockQuantity;
-    private String inStockId;
 
-//    todo
-//    @Transient
-//    private String smallBookImageId;
-//    private String bookImageId;
-
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -118,19 +129,19 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public double getShippingWeight() {
+    public long getShippingWeight() {
         return shippingWeight;
     }
 
-    public void setShippingWeight(double shippingWeight) {
+    public void setShippingWeight(long shippingWeight) {
         this.shippingWeight = shippingWeight;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -158,11 +169,4 @@ public class Book implements Serializable {
         this.inStockQuantity = inStockQuantity;
     }
 
-    public String getInStockId() {
-        return inStockId;
-    }
-
-    public void setInStockId(String inStockId) {
-        this.inStockId = inStockId;
-    }
 }

@@ -1,21 +1,23 @@
-version: '3.3'
+version: '3.4'
 
 services:
-#  postgres:
-#    build:
-#      context: services/postgres
-#      dockerfile: Dockerfile.development
-#    command: postgres
-#    ports:
-#      - "5432:5432"
-#    volumes:
-#      - "~/.bash_history:/.bash_history"
-#      - "/tmp:/tmp:delegated"
-  store-service:
+  postgres-db:
+    container_name: postgres-db
+    build:
+      context: docker/postgres
+      dockerfile: Dockerfile
+    ports:
+      - 15432:5432
+    volumes:
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql
+  store-sv:
+    container_name: store-sv
+    expose:
+      - 18181
     build:
       context: .
       dockerfile: ./docker/store/Dockerfile
     ports:
       - 18181:18181
-#    depends_on:
-#      - postgres
+    depends_on:
+      - postgres-db

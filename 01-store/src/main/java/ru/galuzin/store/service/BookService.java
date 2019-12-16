@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 public class BookService {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     public List<Book> findAll() {
         List<Book> bookList = (List<Book>) bookRepository.findAll();
@@ -54,8 +57,8 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public void getOne(Long id) {
-        bookRepository.findById(id);
+    public Book getOne(Long id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
 }
