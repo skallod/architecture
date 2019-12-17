@@ -29,7 +29,7 @@ public class UserDetailsImpl implements org.springframework.security.core.userde
 
     @Override
     public String getUsername() {
-        return customer.getName();
+        return customer.getEmail();
     }
 
     @Override
@@ -50,5 +50,9 @@ public class UserDetailsImpl implements org.springframework.security.core.userde
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public long getCustomerId(){
+        return customer.getId();
     }
 }

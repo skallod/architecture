@@ -1,6 +1,6 @@
 curl -X POST \
-  'http://localhost:18181/api/v1/book/add' \
-  -H 'x-auth-token: 9db8eae7-855b-4f57-8cb9-b9dd94230ff6'\
+  'http://localhost:18181/api/v1/order/add' \
+  -H 'x-auth-token: 40778de6-8f35-4f36-9877-6f019209df16'\
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
-  -d '{"customerId":"1","title":"fdasdfaf","publisher":"fdadfsa"}'
+  -d '{"customerId":"1", "orderItemSet" : [{"price":77500, "quantity":2,"bookId":1}]}'

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.galuzin.store.domain.Book;
 import ru.galuzin.store.service.BookService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/book")
 public class BookController {
@@ -26,4 +28,10 @@ public class BookController {
     public Book addBook(@RequestBody Book book) {
         return bookService.save(book);
     }
+
+    @RequestMapping("/bookList")
+    public List<Book> getBookList() {
+        return bookService.findAll();
+    }
+
 }

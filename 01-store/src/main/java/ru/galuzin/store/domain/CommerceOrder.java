@@ -1,8 +1,9 @@
 package ru.galuzin.store.domain;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class CommerceOrder {
@@ -12,28 +13,34 @@ public class CommerceOrder {
     @SequenceGenerator(name="commerce_order_id_seq",sequenceName="commerce_order_id_seq")
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private long customerId;
 
     @OneToMany( mappedBy = "commerceOrder" , fetch = FetchType.LAZY )
-    private Set<OrderItem> orderItemSet;
+    private List<OrderItem> orderItemSet = Collections.emptyList();
 
     private OrderStatus orderStatus = OrderStatus.NEW;
 
-    public Customer getCustomerId() {
-        return customer;
+    public long getId() {
+        return id;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Set<OrderItem> getOrderItemSet() {
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
+
+    public List<OrderItem> getOrderItemSet() {
         return orderItemSet;
     }
 
-    public void setOrderItemSet(Set<OrderItem> orderItemSet) {
+    public void setOrderItemSet(List<OrderItem> orderItemSet) {
         this.orderItemSet = orderItemSet;
     }
 

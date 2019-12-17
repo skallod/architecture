@@ -7,12 +7,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
 
-@NamedEntityGraph(name = "graph.Customer.orderSet",
-		attributeNodes = @NamedAttributeNode("orderSet"))
 @Entity
-@Table(name = "customer")
+@Table(name = "customer",
+		indexes = {
+				@Index(columnList = "email", name = "email_idx")
+		})
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID=1L;
@@ -35,11 +35,9 @@ public class Customer implements Serializable {
 	private String lastName;
 
 	@NotBlank
+	@Column(unique = true)
 	@Size(max = 255)
 	private String email;
-
-	@OneToMany( mappedBy = "customer" , fetch = FetchType.LAZY )
-	private Set<CommerceOrder> orderSet;
 
 	public Long getId() {
 		return id;
@@ -89,7 +87,4 @@ public class Customer implements Serializable {
 		this.email = email;
 	}
 
-	public Set<CommerceOrder> getOrderSet() {
-		return orderSet;
-	}
 }

@@ -1,5 +1,7 @@
 package ru.galuzin.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,9 +22,18 @@ public class OrderItem  implements Serializable {
 
     private long bookId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="commerce_order_id", nullable=false)
     private CommerceOrder commerceOrder;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getPrice() {
         return price;
@@ -50,6 +61,10 @@ public class OrderItem  implements Serializable {
 
     public void setCommerceOrder(CommerceOrder commerceOrder) {
         this.commerceOrder = commerceOrder;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 
     @Override

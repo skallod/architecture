@@ -38,7 +38,7 @@ public class LoginController {
 		return new ResponseEntity("Session Active!", HttpStatus.OK);
 	}
 
-	@PostMapping(value="/user/logout")
+	@PostMapping("/user/logout")
 	public ResponseEntity logout(HttpSession session){
 		SecurityContextHolder.clearContext();
 		Optional.ofNullable(session).ifPresent(HttpSession::invalidate);

@@ -7,6 +7,7 @@ import ru.galuzin.store.repository.BookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -20,15 +21,7 @@ public class BookService {
     public List<Book> findAll() {
         List<Book> bookList = (List<Book>) bookRepository.findAll();
 
-        List<Book> activeBookList = new ArrayList<>();
-
-        for (Book book : bookList) {
-            if(book.isActive()) {
-                activeBookList.add(book);
-            }
-        }
-
-        return activeBookList;
+        return bookList.stream().filter(Book::isActive).collect(Collectors.toList());
     }
 
     public Book findOne(Long id) {
