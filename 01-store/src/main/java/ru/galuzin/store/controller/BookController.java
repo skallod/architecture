@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/api/v1/book")
 public class BookController {
 
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
     @Autowired
     BookService bookService;
-
-    private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
     @GetMapping(value="/{id}")
     public Book getBook(@PathVariable("id") Long id) {
