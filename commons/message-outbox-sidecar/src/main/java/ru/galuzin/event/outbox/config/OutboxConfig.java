@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 public class OutboxConfig {
 
-    @Value("${kafka.broker.socket}")String brokerSoket;
+    @Value("${broker.socket}")String brokerSoket;
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {

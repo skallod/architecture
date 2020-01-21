@@ -19,7 +19,8 @@ public class Listener {
         this.jsonConverterService = jsonConverterService;
     }
 
-    @KafkaListener(groupId = "group_3", topics = {"annotated1"})
+    //@KafkaListener(groupId = "group_3", topics = {"${topic.name}"})
+    @KafkaListener(groupId = "group_3", topics = "#{'${listen.topic.name}'.split(',')}")
     public void onMessage(String messageStr) {
         log.info("inbox mesage = " + messageStr);
         try {

@@ -16,5 +16,7 @@ public class OutboxApp {
         message.getHeaderMap().put("event-type", "ORDER_CREATED");
         message.setBody("{\"orderId\": \"1\"}");
         bean.send("annotated1", message);
+        bean.send("thing1", message);
+        bean.send("thing2", message);
     }
 }
