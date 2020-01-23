@@ -9,25 +9,25 @@ import ru.galuzin.event.outbox.domain.Message;
 
 import java.util.concurrent.TimeUnit;
 
-public class SendService {
+public class MessageOutboxService {
 
-    private static final Logger log = LoggerFactory.getLogger(SendService.class);
+    private static final Logger log = LoggerFactory.getLogger(MessageOutboxService.class);
 
     private final KafkaTemplate<String,String> kafkaTemplate;
 
     final private JsonConverterService jsonConverterService;
 
-    public SendService(KafkaTemplate<String, String> kafkaTemplate,
-                       JsonConverterService jsonConverterService) {
+    public MessageOutboxService(KafkaTemplate<String, String> kafkaTemplate,
+                                JsonConverterService jsonConverterService) {
         this.kafkaTemplate = kafkaTemplate;
         this.jsonConverterService = jsonConverterService;
     }
 
-    public void send(String topik, Message message){
+    public void send(String topik, String key, Message message){
         try {
             String messageStr = jsonConverterService.toJson(message);
             log.info("outbox message {} {}", message.getId(), messageStr);
-            ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topik, message.getId(), messageStr);
+            ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topik, key, messageStr);
             future.get(10, TimeUnit.SECONDS);
             log.info("value sended {}", message.getId());
         } catch (Exception e) {

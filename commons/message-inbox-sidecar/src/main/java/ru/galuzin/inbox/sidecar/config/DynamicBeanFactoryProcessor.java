@@ -1,4 +1,4 @@
-package ru.galuzin.notification.sidecar.config;
+package ru.galuzin.inbox.sidecar.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.BeansException;

@@ -1,18 +1,18 @@
 package ru.galuzin.event.outbox.config;
 
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import ru.galuzin.event.outbox.service.JsonConverterService;
-import ru.galuzin.event.outbox.service.SendService;
+import ru.galuzin.event.outbox.service.MessageOutboxService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +20,20 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class OutboxConfig {
+
+    @Configuration
+    @Profile("default")
+    @PropertySource("classpath:outbox.properties")
+    public static class Defaults
+    {
+    }
+
+    @Configuration
+    @Profile("container")
+    @PropertySource({"classpath:outbox-container.properties"})
+    public static class Overrides
+    {
+    }
 
     @Value("${broker.socket}")String brokerSoket;
 
@@ -49,8 +63,8 @@ public class OutboxConfig {
     }
 
     @Bean
-    public SendService sendService(){
-        return new SendService(kafkaTemplate(), jsonConverterService());
+    public MessageOutboxService sendService(){
+        return new MessageOutboxService(kafkaTemplate(), jsonConverterService());
     }
 
 }

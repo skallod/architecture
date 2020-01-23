@@ -1,19 +1,28 @@
 package ru.galuzin.notification.mail.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import ru.galuzin.notification.mail.service.NotificationInboxMessageService;
-import ru.galuzin.notification.sidecar.config.MessageHandlerConfig;
-import ru.galuzin.notification.sidecar.service.JsonConverterService;
-import ru.galuzin.notification.sidecar.service.MessageHandlerService;
+import ru.galuzin.inbox.sidecar.config.MessageHandlerConfig;
+import ru.galuzin.inbox.sidecar.service.JsonConverterService;
+import ru.galuzin.inbox.sidecar.service.MessageHandlerService;
+import ru.galuzin.notification.mail.service.OrderEventHandler;
 
 @Configuration
 @Import(MessageHandlerConfig.class)
 public class NotificationConfig {
+
+
+    @Configuration
+    @Profile("default")
+    @PropertySource("classpath:application.properties")
+    public static class Defaults
+    {
+    }
+
     @Bean
-    public MessageHandlerService messageHandlerService(JsonConverterService jsonConverterService){
-        return new NotificationInboxMessageService(jsonConverterService);
+    public MessageHandlerService messageHandlerService(JsonConverterService jsonConverterService,
+                                                       OrderEventHandler orderEventHandler){
+        return new NotificationInboxMessageService(jsonConverterService, orderEventHandler);
     }
 
 }

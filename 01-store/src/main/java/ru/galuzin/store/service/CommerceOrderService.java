@@ -1,34 +1,60 @@
 package ru.galuzin.store.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ru.galuzin.event.outbox.domain.Message;
+import ru.galuzin.event.outbox.service.JsonConverterService;
+import ru.galuzin.event.outbox.service.MessageOutboxService;
 import ru.galuzin.store.domain.CommerceOrder;
-import ru.galuzin.store.repository.CommerceOrderRepository;
-import ru.galuzin.store.repository.OrderItemRepository;
+import ru.galuzin.store.domain.EventType;
+import ru.galuzin.store.domain.OrderEvent;
+import ru.galuzin.store.domain.OrderItem;
+
+import java.util.List;
 
 @Service
 public class CommerceOrderService {
 
-    private final CommerceOrderRepository orderRepository;
+    private final Logger log = LoggerFactory.getLogger(CommerceOrderService.class);
 
-    private final OrderItemRepository orderItemRepository;
+    private final MessageOutboxService messageOutboxService;
 
-    public CommerceOrderService(CommerceOrderRepository orderRepository, OrderItemRepository orderItemRepository) {
-        this.orderRepository = orderRepository;
-        this.orderItemRepository = orderItemRepository;
+    private final JsonConverterService jsonConverterService;
+
+    private final String ordersTopic;
+
+    private final CommerceOrderDao commerceOrderDao;
+
+    public CommerceOrderService(MessageOutboxService messageOutboxService,
+                                JsonConverterService jsonConverterService,
+                                CommerceOrderDao commerceOrderDao,
+                                @Value("${orders.topic}")String ordersTopic
+                                ) {
+        this.messageOutboxService = messageOutboxService;
+        this.jsonConverterService = jsonConverterService;
+        this.ordersTopic = ordersTopic;
+        this.commerceOrderDao = commerceOrderDao;
     }
 
-    public CommerceOrder getOne(long id){
-        return orderRepository.findById(id).orElse(null);
+    public CommerceOrder create(CommerceOrder order){
+        CommerceOrder savedOrder = commerceOrderDao.save(order);
+        Message message = new Message();
+        OrderEvent orderEvent = new OrderEvent();
+        String orderId = String.valueOf(savedOrder.getId());
+        orderEvent.setOrderId(orderId);
+        message.getHeaderMap().put(Message.MESSAGE_TYPE_HEADER, EventType.ORDER_CREATED.name());
+        try {
+            message.setBody(jsonConverterService.toJson(orderEvent));
+            messageOutboxService.send(ordersTopic, orderId, message);
+        } catch (Exception e) {
+            log.error("send create order event fail",e);
+        }
+        return savedOrder;
     }
 
-    @Transactional
-    public CommerceOrder save(CommerceOrder order){
-        CommerceOrder orderWithId = orderRepository.save(order);
-        order.getOrderItemSet().forEach(orderItem -> {
-            orderItem.setCommerceOrder(orderWithId);
-            orderItemRepository.save(orderItem);
-        });
-        return orderWithId;
+    public CommerceOrder getOne (Long id){
+        return commerceOrderDao.getOne(id);
     }
 }

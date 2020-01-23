@@ -1,6 +1,7 @@
 package ru.galuzin.store.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,7 @@ public class CommerceOrder {
     private long customerId;
 
     @OneToMany( mappedBy = "commerceOrder" , fetch = FetchType.LAZY )
-    private List<OrderItem> orderItemSet = Collections.emptyList();
+    private List<OrderItem> orderItemSet = new ArrayList<>();
 
     private OrderStatus orderStatus = OrderStatus.NEW;
 

@@ -1,8 +1,10 @@
-package ru.galuzin.notification.sidecar.domain;
+package ru.galuzin.inbox.sidecar.domain;
 
 import java.util.Map;
 
 public class Message {
+
+    public static final String MESSAGE_TYPE_HEADER = "message-type";
 
     String id;
 

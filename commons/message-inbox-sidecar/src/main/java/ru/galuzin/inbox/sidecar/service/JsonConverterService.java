@@ -1,7 +1,6 @@
-package ru.galuzin.notification.sidecar.service;
+package ru.galuzin.inbox.sidecar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Service;
 
 public class JsonConverterService {
 

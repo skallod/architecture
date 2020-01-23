@@ -3,13 +3,13 @@ package ru.galuzin.store;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.galuzin.store.domain.*;
 import ru.galuzin.store.domain.security.Role;
-import ru.galuzin.store.service.BookService;
-import ru.galuzin.store.service.CommerceOrderService;
-import ru.galuzin.store.service.CustomerService;
-import ru.galuzin.store.service.OrderItemService;
+import ru.galuzin.store.service.*;
+
+import java.util.Collections;
 
 @SpringBootApplication
 public class StoreApplication {
@@ -80,15 +80,15 @@ public class StoreApplication {
         CommerceOrder order = new CommerceOrder();
         order.setCustomerId(customer1.getId());
         order.setOrderStatus(OrderStatus.NEW);
-        orderService.save(order);
 
         OrderItem orderItem = new OrderItem();
         orderItem.setQuantity(2);
         orderItem.setCommerceOrder(order);
         orderItem.setPrice(177400);
         orderItem.setBookId(bookId);
-        orderItemService.save(orderItem);
+        order.getOrderItemSet().add(orderItem);
 
+        orderService.create(order);
     }
 
 }

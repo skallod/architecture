@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public class Message {
 
+    public static final String MESSAGE_TYPE_HEADER = "message-type";
+
     String id = UUID.randomUUID().toString();
 
     Map<String, String> headerMap = new HashMap<String,String>();

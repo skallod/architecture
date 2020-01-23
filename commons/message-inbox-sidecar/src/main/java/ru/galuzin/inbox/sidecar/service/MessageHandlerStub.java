@@ -1,8 +1,8 @@
-package ru.galuzin.notification.sidecar.service;
+package ru.galuzin.inbox.sidecar.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.galuzin.notification.sidecar.domain.Message;
+import ru.galuzin.inbox.sidecar.domain.Message;
 
 
 public class MessageHandlerStub implements MessageHandlerService {

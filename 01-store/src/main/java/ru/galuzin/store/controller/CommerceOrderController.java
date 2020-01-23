@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import ru.galuzin.store.domain.CommerceOrder;
 import ru.galuzin.store.domain.security.UserDetailsImpl;
+import ru.galuzin.store.service.CommerceOrderDao;
 import ru.galuzin.store.service.CommerceOrderService;
 
 import java.security.Principal;
@@ -36,6 +37,7 @@ public class CommerceOrderController {
         if(order.getCustomerId() != userDetails.getCustomerId()){
             throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
         }
-        return orderService.save(order);
+        CommerceOrder savedOrder = orderService.create(order);
+        return savedOrder;
     }
 }

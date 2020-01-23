@@ -76,6 +76,12 @@
 			<version>1.3.5.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>ru.galuzin</groupId>
+			<artifactId>message-outbox-sidecar</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
