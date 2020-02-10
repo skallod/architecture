@@ -39,6 +39,7 @@ public class CommerceOrderService {
     }
 
     public CommerceOrder create(CommerceOrder order){
+        log.info("commerce order create");
         CommerceOrder savedOrder = commerceOrderDao.save(order);
         Message message = new Message();
         OrderEvent orderEvent = new OrderEvent();

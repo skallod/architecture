@@ -38,6 +38,7 @@ public class StoreApplication {
         customer1.setPassword(encoder.encode("p"));
         String email = "JAdams@gmail.com";
         customer1.setEmail(email);
+        customer1.setPhone("81234567");
         customer1.setRole(Role.USER);
         customerService.createUser(customer1);
         customer1 = customerService.findByEmail(email);

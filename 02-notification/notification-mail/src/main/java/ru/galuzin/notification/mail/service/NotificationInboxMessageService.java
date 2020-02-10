@@ -2,6 +2,7 @@ package ru.galuzin.notification.mail.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
 import ru.galuzin.notification.mail.domain.EventType;
 import ru.galuzin.notification.mail.domain.OrderEvent;
 import ru.galuzin.inbox.sidecar.domain.Message;
@@ -34,7 +35,6 @@ public class NotificationInboxMessageService implements MessageHandlerService {
             switch (eventType) {
                 case ORDER_CREATED:
                     OrderEvent orderEvent = jsonConverterService.fromJson(event.getBody(), OrderEvent.class);
-                    log.info("order id {}", orderEvent.getOrderId());
                     orderEventHandler.orderCreated(orderEvent);
                     break;
             }

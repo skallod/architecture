@@ -20,3 +20,13 @@ services:
       - ADVERTISED_HOST_NAME=localhost
       - KAFKA_HEAP_OPTS=-Xmx520m -Xms520m
       - ZOOKEEPER_SERVERS=zookeeper:2181
+
+  postgres-db:
+    container_name: postgres-db
+    build:
+      context: 01-store/docker/postgres
+      dockerfile: Dockerfile
+    ports:
+      - 15432:5432
+    volumes:
+      - ./01-store/docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql

@@ -16,7 +16,7 @@ RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 
 ##local jar
-ADD target/notification-mail-1.0.jar $PROJECT_DIR
+ADD target/store-0.0.1-SNAPSHOT.jar $PROJECT_DIR
 RUN mv *.jar app.jar && ls
 
 #COPY --from=0 $PROJECT_DIR/architecture/02-notification/notification-mail/target/app.jar $PROJECT_DIR/

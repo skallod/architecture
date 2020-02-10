@@ -1,9 +1,7 @@
 package ru.galuzin.store.config;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
+import org.dozer.DozerBeanMapper;
+import org.springframework.context.annotation.*;
 import ru.galuzin.event.outbox.config.OutboxConfig;
 
 @Configuration
@@ -21,5 +19,10 @@ public class StoreConfig {
     @PropertySource({"classpath:application-container.properties"})
     public static class Overrides
     {
+    }
+
+    @Bean
+    public DozerBeanMapper dozerBeanMapper() throws Exception {
+        return new DozerBeanMapper();
     }
 }

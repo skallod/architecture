@@ -1,6 +1,8 @@
 package ru.galuzin.inbox.sidecar.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -14,14 +16,19 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class DynamicBeanFactoryProcessor  implements BeanFactoryPostProcessor, InitializingBean {
+public class DynamicBeanFactoryProcessor  implements BeanFactoryPostProcessor/*, InitializingBean*/ {
 
-    List<String> topics;// = Collections.emptyList();
+    private static final Logger log = LoggerFactory.getLogger(DynamicBeanFactoryProcessor.class);
+
+    private final List<String> topics;// = Collections.emptyList();
+
+    public DynamicBeanFactoryProcessor(List<String> topics) {
+        this.topics = topics;
+    }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         final BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) beanFactory;
-
         topics.forEach(t -> beanDefinitionRegistry.registerBeanDefinition("topicBean-" + t, BeanDefinitionBuilder
                         .rootBeanDefinition(NewTopic.class)
                         //.setFactoryMethodOnBean("createInstance", "dynamicBeanFactoryProcessor")
@@ -31,11 +38,12 @@ public class DynamicBeanFactoryProcessor  implements BeanFactoryPostProcessor, I
                         .getBeanDefinition()));
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        this.topics = asList(PropertiesLoaderUtils
-                .loadProperties(new ClassPathResource("/application.properties"))
-                .getProperty("listen.topic.name", "")
-                .split(","));
-    }
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        this.topics = asList(PropertiesLoaderUtils
+//                .loadProperties(new ClassPathResource("/application.properties"))
+//                .getProperty("listen.topic.name", "")
+//                .split(","));
+//        log.info("dynamic topics {}", topics);
+//    }
 }

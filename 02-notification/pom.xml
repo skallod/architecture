@@ -9,5 +9,6 @@
 	<name>notification</name>
 	<modules>
 		<module>notification-mail</module>
+		<module>notification-sms</module>
 	</modules>
 </project>

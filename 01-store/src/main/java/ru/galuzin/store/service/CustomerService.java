@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.galuzin.store.domain.Book;
 import ru.galuzin.store.domain.Customer;
 import ru.galuzin.store.repository.CustomerRepository;
 
@@ -31,6 +32,10 @@ public class CustomerService {
 
     public Customer findByEmail(String email){
         return customerRepository.findByEmail(email);
+    }
+
+    public Customer getOne(Long id) {
+        return customerRepository.findById(id).orElse(null);
     }
 
 }

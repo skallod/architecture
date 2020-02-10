@@ -39,6 +39,10 @@ public class Customer implements Serializable {
 	@Size(max = 255)
 	private String email;
 
+	@Column(unique = true)
+	@Size(max = 255)
+	private String phone;
+
 	public Long getId() {
 		return id;
 	}
@@ -87,4 +91,11 @@ public class Customer implements Serializable {
 		this.email = email;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

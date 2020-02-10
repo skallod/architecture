@@ -14,7 +14,9 @@ import org.springframework.kafka.core.ProducerFactory;
 import ru.galuzin.event.outbox.service.JsonConverterService;
 import ru.galuzin.event.outbox.service.MessageOutboxService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @EnableKafka
@@ -35,7 +37,8 @@ public class OutboxConfig {
     {
     }
 
-    @Value("${broker.socket}")String brokerSoket;
+    @Value("#{'${spring.kafka.bootstrap-servers}'.split(',')}")
+    List<String> bootstrapServers = new ArrayList<>();
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -45,7 +48,7 @@ public class OutboxConfig {
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokerSoket);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         // See https://kafka.apache.org/documentation/#producerconfigs for more properties
