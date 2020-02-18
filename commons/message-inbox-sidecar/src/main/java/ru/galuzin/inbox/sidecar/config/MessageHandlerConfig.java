@@ -32,12 +32,13 @@ import ru.galuzin.inbox.sidecar.service.JsonConverterService;
 import ru.galuzin.inbox.sidecar.service.MessageHandlerService;
 import ru.galuzin.inbox.sidecar.service.MessageHandlerStub;
 import ru.galuzin.inbox.sidecar.service.Listener;
+import ru.galuzin.inbox.sidecar.util.KafkaContainerHolder;
 
 import java.time.Duration;
 import java.util.*;
 
-@Configuration
-@EnableKafka
+//@Configuration
+//@EnableKafka
 public class MessageHandlerConfig {
 
     private static final Logger log = LoggerFactory.getLogger(MessageHandlerConfig.class);
@@ -132,7 +133,7 @@ public class MessageHandlerConfig {
 
 
     @Bean
-    public /*MessageListener<String, String>*/ Listener kafkaListener(MessageHandlerService messageHandlerService) {
+    public Listener kafkaListener(MessageHandlerService messageHandlerService) {
         return new Listener(messageHandlerService, jsonConverterService());
     }
 
@@ -141,20 +142,5 @@ public class MessageHandlerConfig {
         return new JsonConverterService();
     }
 
-//    @Bean
-//    public KafkaMessageListenerContainer<String, String> kafkaContainer(
-//            MessageListener<String, String> kafkaListener
-//    ){
-//        log.info("topics {}", topics);
-//        ContainerProperties containerProps = new ContainerProperties(topics.toArray(new String[topics.size()]));
-//        containerProps.setMessageListener(kafkaListener);
-//        containerProps.setMissingTopicsFatal(false);
-//        containerProps.setAckMode(ContainerProperties.AckMode.MANUAL);
-//        containerProps.setPollTimeout(3000);
-//        containerProps.setGroupId("inbox-group-3");
-//        KafkaMessageListenerContainer<String, String> container =
-//                new KafkaMessageListenerContainer<>(consumerFactory(), containerProps);
-//        container.start();
-//        return container;
-//    }
+
 }

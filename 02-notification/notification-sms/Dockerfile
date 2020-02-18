@@ -7,7 +7,7 @@ WORKDIR $PROJECT_DIR
 RUN git clone --single-branch --branch 02-notification-sidecar https://github.com/skallod/architecture \
 && cd architecture/commons/message-inbox-sidecar && ls && mvn dependency:resolve \
 && mvn install && cd target && ls && cd ../../../02-notification/notification-mail \
-&& mvn install && cd target && ls && cd .. && ls cd .. && ls && cd notification-sms \
+&& mvn install && ls && cd ../notification-sms \
 && mvn package && cd target && ls && mv *.jar app.jar
 
 FROM openjdk:8-jdk
@@ -23,4 +23,3 @@ WORKDIR $PROJECT_DIR
 COPY --from=0 $PROJECT_DIR/architecture/02-notification/notification-sms/target/app.jar $PROJECT_DIR/
 
 CMD ["java", "-Dspring.profiles.active=container", "-jar", "/opt/project/app.jar"]
-
