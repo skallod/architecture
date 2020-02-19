@@ -59,8 +59,8 @@ services:
     image: sms-service
     networks:
       - store-net
-    depends_on:
-      - kafka
+#    depends_on:
+#      - kafka
     environment:
       - NODE_ID=sms_1
 
