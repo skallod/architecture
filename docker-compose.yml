@@ -1,85 +1,84 @@
 version: '3'
 services:
 
-  zookeeper:
-    container_name: zookeeper-service
-    image: eventuateio/eventuate-zookeeper:0.4.0.RELEASE
-    ports:
-      - 2181:2181
-      - 2888:2888
-      - 3888:3888
-    networks:
-      - store-net
-
-  kafka:
-    container_name: kafka-service
-    image: eventuateio/eventuate-kafka:0.3.0.RELEASE
-    ports:
-      - 9092:9092
-    networks:
-      - store-net
-    depends_on:
-      - zookeeper
-    environment:
-      - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
-      - KAFKA_HEAP_OPTS=-Xmx520m -Xms520m
-      - ZOOKEEPER_SERVERS=zookeeper:2181
-
-  postgres-db:
-    container_name: postgres-db
-    build:
-      context: 01-store/docker/postgres
-      dockerfile: Dockerfile
-    networks:
-        - store-net
-    ports:
-      - 15432:5432
-    volumes:
-      - ./01-store/docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql
-
-  mail-service:
-    container_name: mail-service
-    build:
-      context: 02-notification/notification-mail
-      dockerfile: Dockerfile
-    image: mail-service
-    networks:
-      - store-net
-    depends_on:
-      - zookeeper
-      - kafka
-    environment:
-      - NODE_ID=mail_1
-
-#  sms-service:
-#    container_name: sms-service
-#    build:
-#      context: 02-notification/notification-sms
-#      dockerfile: Dockerfile
-#    image: sms-service
+#  zookeeper:
+#    container_name: zookeeper-service
+#    image: eventuateio/eventuate-zookeeper:0.4.0.RELEASE
+#    ports:
+#      - 2181:2181
+#      - 2888:2888
+#      - 3888:3888
+#    networks:
+#      - store-net
+#
+#  kafka:
+#    container_name: kafka-service
+#    image: eventuateio/eventuate-kafka:0.3.0.RELEASE
+#    ports:
+#      - 9092:9092
 #    networks:
 #      - store-net
 #    depends_on:
-##      - store-service
+#      - zookeeper
+#    environment:
+#      - ADVERTISED_HOST_NAME=${DOCKER_HOST_IP}
+#      - KAFKA_HEAP_OPTS=-Xmx520m -Xms520m
+#      - ZOOKEEPER_SERVERS=zookeeper:2181
+#
+#  postgres-db:
+#    container_name: postgres-db
+#    build:
+#      context: 01-store/docker/postgres
+#      dockerfile: Dockerfile
+#    networks:
+#        - store-net
+#    ports:
+#      - 15432:5432
+#    volumes:
+#      - ./01-store/docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql
+
+#  mail-service:
+#    container_name: mail-service
+#    build:
+#      context: 02-notification/notification-mail
+#      dockerfile: Dockerfile
+#    image: mail-service
+#    networks:
+#      - store-net
+#    depends_on:
+#      - zookeeper
 #      - kafka
 #    environment:
-#      - NODE_ID=sms_1
+#      - NODE_ID=mail_1
 
-  store-service:
-    container_name: store-service
+  sms-service:
+    container_name: sms-service
     build:
-      context: 01-store
+      context: notification/notification-sms
       dockerfile: Dockerfile
-    image: store-service
+    image: sms-service
     networks:
       - store-net
-    expose:
-      - 18181
-    ports:
-      - 18181:18181
     depends_on:
       - kafka
-      - postgres-db
+    environment:
+      - NODE_ID=sms_1
+
+#  store-service:
+#    container_name: store-service
+#    build:
+#      context: store
+#      dockerfile: Dockerfile
+#    image: store-service
+#    networks:
+#      - store-net
+#    expose:
+#      - 18181
+#    ports:
+#      - 18181:18181
+#    depends_on:
+#      - kafka
+#      - postgres-db
 
 networks:
   store-net:

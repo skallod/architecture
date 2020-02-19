@@ -37,8 +37,8 @@ import ru.galuzin.inbox.sidecar.util.KafkaContainerHolder;
 import java.time.Duration;
 import java.util.*;
 
-//@Configuration
-//@EnableKafka
+@Configuration
+@EnableKafka
 public class MessageHandlerConfig {
 
     private static final Logger log = LoggerFactory.getLogger(MessageHandlerConfig.class);

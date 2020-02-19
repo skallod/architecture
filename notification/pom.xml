@@ -3,17 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.galuzin</groupId>
-	<artifactId>commons</artifactId>
+	<artifactId>notification</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
-	<name>commons</name>
+	<name>notification</name>
 	<parent>
-		<groupId>ru.galuzin</groupId>
 		<artifactId>store-project</artifactId>
+		<groupId>ru.galuzin</groupId>
 		<version>1.0</version>
 	</parent>
 	<modules>
-		<module>message-inbox-sidecar</module>
-		<module>message-outbox-sidecar</module>
+		<module>notification-mail</module>
+		<module>notification-sms</module>
+		<module>notification-email</module>
 	</modules>
 </project>

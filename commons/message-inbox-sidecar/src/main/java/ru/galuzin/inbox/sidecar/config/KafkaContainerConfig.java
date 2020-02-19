@@ -9,7 +9,7 @@ import ru.galuzin.inbox.sidecar.util.KafkaContainerHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class KafkaContainerConfig {
 
     @Value("#{'${spring.kafka.bootstrap-servers}'.split(',')}")

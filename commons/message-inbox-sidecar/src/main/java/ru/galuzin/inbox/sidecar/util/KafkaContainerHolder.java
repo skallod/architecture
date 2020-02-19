@@ -47,21 +47,8 @@ public class KafkaContainerHolder {
         retryTemplate.setRetryPolicy(new NeverRetryPolicy());
         ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
         retryTemplate.setBackOffPolicy(backOffPolicy);
-        AcknowledgingMessageListener<String,Message> processor = new AcknowledgingMessageListener<String,Message>() {
-            @Override
-            public void onMessage(ConsumerRecord data, Acknowledgment acknowledgment) {
-                acknowledgment.acknowledge();
-                log.info("on message {}, mes map = {}", data.headers(), data.value().toString());
-            }
-        };
-//        MessageListener<String,Message> processor = new MessageListener<String,Message>() {
-//            @Override
-//            public void onMessage(ConsumerRecord<String, Message> data) {
-//                log.info("on message {}, mes map = {}", data.headers(), data.value().toString());
-//            }
-//        };
         RetryingMessageListenerAdapter<String, Message> l
-                = new RetryingMessageListenerAdapter<>(processor, retryTemplate);
+                = new RetryingMessageListenerAdapter<>(new KafkaMessageProcessor(), retryTemplate);
         containerProps.setMessageListener(l);
 
         HashMap<String, Object> factoryProps = new HashMap<>();
