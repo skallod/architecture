@@ -5,7 +5,7 @@ RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 #
 RUN git clone --single-branch --branch 02-notification-sidecar https://github.com/skallod/architecture \
-&& cd architecture && mvn -DskipTests install
+&& cd architecture && mvn -DskipTests install \
 && cd notification/notification-sms/target && mv *.jar app.jar
 # && cd architecture/commons/message-inbox-sidecar && ls && mvn dependency:resolve \
 # && mvn install && cd target && ls && cd ../../../02-notification/notification-mail \

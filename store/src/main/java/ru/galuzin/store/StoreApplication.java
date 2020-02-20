@@ -78,18 +78,18 @@ public class StoreApplication {
             bookId = bookService.save(book).getId();
         }
 
-        CommerceOrder order = new CommerceOrder();
-        order.setCustomerId(customer1.getId());
-        order.setOrderStatus(OrderStatus.NEW);
-
-        OrderItem orderItem = new OrderItem();
-        orderItem.setQuantity(2);
-        orderItem.setCommerceOrder(order);
-        orderItem.setPrice(177400);
-        orderItem.setBookId(bookId);
-        order.getOrderItemSet().add(orderItem);
-
-        orderService.create(order);
+//        CommerceOrder order = new CommerceOrder();
+//        order.setCustomerId(customer1.getId());
+//        order.setOrderStatus(OrderStatus.NEW);
+//
+//        OrderItem orderItem = new OrderItem();
+//        orderItem.setQuantity(2);
+//        orderItem.setCommerceOrder(order);
+//        orderItem.setPrice(177400);
+//        orderItem.setBookId(bookId);
+//        order.getOrderItemSet().add(orderItem);
+//
+//        orderService.create(order);
     }
 
 }
