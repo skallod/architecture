@@ -13,7 +13,7 @@
 		<version>1.0</version>
 	</parent>
 	<modules>
-		<module>notification-mail</module>
+		<module>notification-sidecar</module>
 		<module>notification-sms</module>
 		<module>notification-email</module>
 	</modules>
