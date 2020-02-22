@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "e62073fd-6aef-4711-98cf-aee8430c82be",
+		"name": "store-test-collectoin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create-order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": " Basic SkFkYW1zQGdtYWlsLmNvbTpw",
+						"type": "text"
+					},
+					{
+						"key": "cache-control",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"customerId\":\"1\", \"orderItemSet\" : [{\"price\":77500, \"quantity\":2,\"bookId\":1}]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:18181/api/v1/order/add"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
