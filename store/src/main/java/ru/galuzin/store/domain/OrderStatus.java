@@ -3,9 +3,11 @@ package ru.galuzin.store.domain;
 public enum OrderStatus {
     NEW,
     ERROR,
-    BOOKING,
+    BOOKED,
     MANUAL_SUPPORT,
     PAYED,
-    SHIPPING,
+    PAY_PENDING,
+    SHIPPED,
+    SHIPPING_PENDING,
     COMPLETED
 }
