@@ -24,9 +24,11 @@ services:
   postgres-db:
     container_name: postgres-db
     build:
-      context: 01-store/docker/postgres
+      context: store/docker/postgres
       dockerfile: Dockerfile
     ports:
       - 15432:5432
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - ./01-store/docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql
+      - ./store/docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql

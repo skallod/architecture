@@ -31,9 +31,11 @@ services:
       context: store/docker/postgres
       dockerfile: Dockerfile
     networks:
-        - store-net
+      - store-net
     ports:
       - 15432:5432
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - ./store/docker/postgres/init.sql:/docker-entrypoint-initdb.d/psql-dump.sql
 
