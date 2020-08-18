@@ -1,0 +1,94 @@
+GET /articles/article/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "term": {
+          "tags": "parphum"
+        }
+      }
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "term": {
+          "status": "active"
+        }
+      }
+    }
+  }
+}
+
+GET /_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "title":   "Search"        }},
+        { "match": { "content": "Elasticsearch" }}
+      ],
+      "filter": [
+        { "term":  { "status": "published" }},
+        { "range": { "publish_date": { "gte": "2015-01-01" }}}
+      ]
+    }
+  }
+}
+
+POST _search
+{
+  "query": {
+    "bool" : {
+      "must" : {
+        "term" : { "user" : "kimchy" }
+      },
+      "filter": {
+        "term" : { "tag" : "tech" }
+      },
+      "must_not" : {
+        "range" : {
+          "age" : { "gte" : 10, "lte" : 20 }
+        }
+      },
+      "should" : [
+        { "term" : { "tag" : "wow" } },
+        { "term" : { "tag" : "elasticsearch" } }
+      ],
+      "minimum_should_match" : 1,
+      "boost" : 1.0
+    }
+  }
+}
+
+GET /_search
+{
+    "query": {
+        "match" : {
+            "message" : {
+                "query" : "this is a test",
+                "operator" : "and"
+            }
+        }
+    }
+}
+
+DELETE /app_journal
+
+Boolean query
+
+must
+The clause (query) must appear in matching documents and will contribute to the score.
+filter
+The clause (query) must appear in matching documents. However unlike must the score of the query will be ignored. Filter clauses are executed in filter context, meaning that scoring is ignored and clauses are considered for caching.
+should
+The clause (query) should appear in the matching document.
+must_not
+The clause (query) must not appear in the matching documents. Clauses are executed in filter context meaning that scoring is ignored and clauses are considered for caching. Because scoring is ignored, a score of 0 for all documents is returned.

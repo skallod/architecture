@@ -4,8 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
 import ru.galuzin.elastic.sample.model.Article;
 
+@Repository
 public interface ArticleRepository extends ElasticsearchRepository<Article, String> {
 
     Page<Article> findByAuthorsName(String name, Pageable pageable);
@@ -13,10 +15,21 @@ public interface ArticleRepository extends ElasticsearchRepository<Article, Stri
     @Query("{\"bool\": {\"must\": [{\"match\": {\"authors.name\": \"?0\"}}]}}")
     Page<Article> findByAuthorsNameUsingCustomQuery(String name, Pageable pageable);
 
-    @Query("{\"bool\": {\"must\": {\"match_all\": {}}, \"filter\": {\"term\": {\"tags\": \"?0\" }}}}")
+    @Query("{\"bool\": {" +
+                "\"must\": {\"match_all\": {}}, " + //may be comment, score=1 , look at constant_score
+                "\"filter\": " +
+                //"\"must\": " +
+                    "{\"term\": {\"tags\": \"?0\" }}" +
+            "}}")
     Page<Article> findByFilteredTagQuery(String tag, Pageable pageable);
 
-    @Query("{\"bool\": {\"must\": {\"match\": {\"authors.name\": \"?0\"}}, \"filter\": {\"term\": {\"tags\": \"?1\" }}}}")
+    @Query("{\"bool\": {" +
+                "\"must\": " +
+                    "{\"match\": " +
+                        "{\"authors.name\": \"?0\"}" +
+                    "}, " +
+                "\"filter\": {\"term\": {\"tags\": \"?1\" }}" +
+            "}}")
     Page<Article> findByAuthorsNameAndFilteredTagQuery(String name, String tag, Pageable pageable);
 
     Page<Article> findByTitle(String title, Pageable pageable);
